@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include<stdlib.h>
+#pragma warning(disable:4996)
+//实际2的1024次方大概有310位
+#define SIZE 500 
+
+//田田：求出2的(512~1024)次方的数值，用十进制形式表示出来(田田牛呀)
+int main()
+{
+	int i, j, k, temp, N, jin = 0;
+	char *array;
+	array = (char *)malloc(SIZE*sizeof(char));
+	for (i = 0; i < SIZE; i++)
+		array[i] = '0';
+	array[0] = '1';
+	printf("请输入512~1024范围内的指数：");
+	scanf("%d", &N);
+	getchar();
+	for (i = 0; i < N; i++)
+		for (j = 0; j < SIZE; j++)
+		{
+			if (array[j] == '0'&&jin == 0)
+			{
+				for (k = j; k < SIZE; k++)
+					if (array[k] != '0') break;
+				if (k >= SIZE) break;
+			}
+			temp = (array[j] - 48) * 2 + jin;
+			if (temp / 10)
+				jin = temp / 10;
+			else
+				jin = 0;
+			array[j] = temp % 10 + 48;
+		}
+
+	//将字符依次输出来即为2的N次方十进制数
+	printf("输出结果如下，共%d位：\n",j);
+	for (i = j-1; i >=0; i--)
+		printf("%c", array[i]);
+	getchar();
+}
